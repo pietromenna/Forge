@@ -1,0 +1,25 @@
+{
+  "name": "html-inspector",
+  "version": "1.0.0",
+  "main": "src/js/main.js",
+  "scripts": {
+    "build": "browserify src/js/main.js -o build/bundle.js",
+    "watch": "watchify src/js/main.js -o build/bundle.js --debug --verbose"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "htmlparser2": "^3.8.2",
+    "react": "^0.13.0",
+    "superagent": "^1.1.0"
+  },
+  "devDependencies": {
+    "browserify": "^9.0.3",
+    "reactify": "^1.1.0"
+  },
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  }
+}
