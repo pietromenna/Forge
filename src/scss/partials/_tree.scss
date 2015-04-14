@@ -1,0 +1,17 @@
+@import 'modules/colors';
+@import 'modules/fonts';
+
+.node {
+  margin-left: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-family: $main-font;
+  font-size: 12px;
+}
+
+.node i.fa {
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  color: $show-children-color;
+}

@@ -64,7 +64,17 @@ var ParentNode = React.createClass({
     var curEl = this.props.el;
     var node;
 
-    var startTag = '<' + curEl.name + '>';
+    var attributeStr = '';
+    if (curEl.attribs) {
+      var attributes = [];
+      _.forEach(curEl.attribs, function (value, attributeName) {
+        attributes.push(attributeName + '="' + value + '"');
+      });
+
+      attributeStr = attributes.join(' ');
+    }
+
+    var startTag = '<' + curEl.name + (attributeStr.length > 0 ? (' ' + attributeStr) : '') + '>';
     var middle = '...';
     var closeTag = '</' + curEl.name + '>';
 
