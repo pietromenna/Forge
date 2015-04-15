@@ -20,7 +20,13 @@ var LeafNode = React.createClass({
     var middle = unescape(_.pluck(curEl.children, 'data').join(''));
     var closeTag = '</' + curEl.name + '>';
 
-    return <div className="node child">{ startTag + middle + closeTag }</div>;
+    return (
+      <div className="node child">
+        <span className="tag">{ startTag }</span>
+        <span>{ middle }</span>
+        <span className="tag">{ closeTag }</span>
+      </div>
+    );
   }
 });
 

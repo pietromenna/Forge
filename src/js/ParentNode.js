@@ -82,9 +82,9 @@ var ParentNode = React.createClass({
       node = (
         <div className="node parent">
           { this._createExpandChildrenElement() }
-          <span>{ startTag }
+          <span className="tag">{ startTag }</span>
           { this._createChildNodes() }
-          { closeTag }</span>
+          <span className="tag">{ closeTag }</span>
         </div>
       );
     }
@@ -92,7 +92,9 @@ var ParentNode = React.createClass({
       node = (
         <div className="node parent">
           { this._createExpandChildrenElement() }
-          <span>{ startTag + middle + closeTag }</span>
+          <span className="tag">{ startTag }</span>
+          <span>{ middle }</span>
+          <span className="tag">{ closeTag }</span>
         </div>
       );
     }
