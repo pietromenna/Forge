@@ -19,7 +19,14 @@ var ParentNode = React.createClass({
   },
 
   _highlightElementClickHandler: function () {
-    console.log(this.props.path);
+    var curPath = this.props.path;
+
+    var page = document.getElementById('current-page');
+
+    page.contentWindow.postMessage({
+      type: 'select-from-tree',
+      xpath: curPath
+    }, 'http://localhost:3000');
   },
 
   _createExpandChildrenElement: function() {

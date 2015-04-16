@@ -15,7 +15,12 @@
 					window.scrollTo(left, top - e.data.delta);
 				}
 				else {
-					var el = document.elementFromPoint(e.data.x, e.data.y);
+					var el;
+
+					if (e.data.type === 'select-coordinates')
+						el = document.elementFromPoint(e.data.x, e.data.y);
+					else
+						el = $(document).xpath(e.data.xpath)[0];
 
 					// TODO: find the source of why this can be null
 					if (el !== null) {

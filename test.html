@@ -2,8 +2,58 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>
-			Toddler Snow Flurry™ Boots from Lands' End
+			Toddler Snow Flurry™ Boots from Lands' Ends
 		</title>
+		<script type="text/javascript" src="jquery.min.js"></script>
+		<script type="text/javascript" src="jquery.xpath.min.js"></script>
+		<script type="text/javascript">
+			var m = parent;
+			window.addEventListener("message", function (e) {
+				if (e.data.type === 'scroll') {
+					var top  = window.pageYOffset || document.documentElement.scrollTop;
+    			var left = window.pageXOffset || document.documentElement.scrollLeft;
+					window.scrollTo(left, top - e.data.delta);
+				}
+				else {
+					var el;
+
+					if (e.data.type === 'select-coordinates')
+						el = document.elementFromPoint(e.data.x, e.data.y);
+					else
+						el = $(document).xpath(e.data.xpath)[0];
+
+					// TODO: find the source of why this can be null
+					if (el !== null) {
+						var rect = el.getBoundingClientRect();
+						m.postMessage({
+							bottom: rect.bottom,
+							height: rect.height,
+							left: rect.left,
+							right: rect.right,
+							top: rect.top,
+							width: rect.width
+						}, 'http://localhost:3000');
+					}
+				}
+			}, false);
+
+			$(function() {
+				var els = $(document).xpath("html/body[1]/div[5]/div[4]/div[1]/div[3]/div[2]/div[2]/a[1]/img[1]");
+				var el = els[0];
+
+				if (el !== null) {
+					var rect = el.getBoundingClientRect();
+					m.postMessage({
+						bottom: rect.bottom,
+						height: rect.height,
+						left: rect.left,
+						right: rect.right,
+						top: rect.top,
+						width: rect.width
+					}, 'http://localhost:3000');
+				}
+			});
+		</script>
 <!-- Coradiant Include -->
 <div id="dtmdiv" style="display: none;"><iframe name="response_frame" src="http://login.dotomi.com/ucm/UCMController?dtm_com=28&amp;dtm_fid=101&amp;dtm_cid=2821&amp;dtm_cmagic=56cb94&amp;dtm_format=5&amp;cli_promo_id=5&amp;dtm_user_id=1234abc&amp;dtmc_department=undefined&amp;dtmc_category=undefined&amp;dtmc_subcategory=undefined&amp;dtmc_product_id=434567&amp;dtm_user_token=&amp;dtmc_ref=&amp;dtmc_loc=http%3A//www.landsend.com/products/toddler-snow-flurry-boots/id_261708"></iframe></div><iframe src="https://4248738.fls.doubleclick.net/activityi;src=4248738;type=globa908;cat=globa739;u8= %2Fproducts%2Ftoddler-snow-flurry-boots%2Fid_261708;ord=690224008868?" style="display: none;"></iframe>
 <!-- End of Coradiant Include -->
@@ -5049,4 +5099,5 @@ display:none;
 	<!-- this is at the end so it'll go over everything. -->
 	<span class="close-button1428938058102 outside-close-button1428938058102"><span class="content1428938058102"></span></span>
 
-</div></div></body></html>
+</div></div>
+</body></html>

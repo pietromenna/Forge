@@ -4,12 +4,92 @@
     <script src="http://fb.me/react-0.13.1.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="main.css">
+    <style>
+      iframe {
+        width: 100%;
+        border: none;
+        height: 75%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #overlay {
+        width: 100%;
+        height: 75%;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+
+      #overlay-inside {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      #highlight {
+        background: rgba(0, 0, 0, .3);
+        display: none;
+        position: absolute;
+      }
+
+      #page-container {
+        height: 75%;
+      }
+
+      #main-container {
+        height: 25%;
+        background: black;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+    </style>
   </head>
   <body>
-    <div id="page-container">    
+    <div id="page-container">
+      <iframe src="http://localhost:3000/test.html" id="current-page"></iframe>
+      <div id="overlay">
+        <div id="overlay-inside">
+          <div id="highlight"></div>
+        </div>
+      </div>
     </div>
     <div id="main-container"></div>
 
     <script src="bundle.js"></script>
+    <script type="text/javascript">
+      var overlay = document.getElementById('overlay');
+      var page = document.getElementById('current-page');
+
+      window.addEventListener('message', function (e) {
+        var rectCoords = e.data;
+
+        highlight.style.top = rectCoords.top + 'px';
+        highlight.style.bottom = rectCoords.bottom + 'px';
+        highlight.style.left = rectCoords.left + 'px';
+        highlight.style.right = rectCoords.right + 'px';
+        highlight.style.height = rectCoords.height + 'px';
+        highlight.style.width = rectCoords.width + 'px';
+        highlight.style.display = 'block';
+      }, false);
+
+      overlay.addEventListener('mousewheel', function (e) {
+        highlight.style.display = 'none';
+        page.contentWindow.postMessage({
+          type: 'scroll',
+          delta: e.wheelDeltaY
+        }, 'http://localhost:3000');
+      });
+
+      overlay.addEventListener('click', function (e) {
+        page.contentWindow.postMessage({
+          type: 'select-coordinates',
+          x: e.offsetX,
+          y: e.offsetY
+        }, 'http://localhost:3000');
+      });
+    </script>
   </body>
 </html>

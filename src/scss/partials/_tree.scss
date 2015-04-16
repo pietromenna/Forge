@@ -1,6 +1,11 @@
 @import 'modules/colors';
 @import 'modules/fonts';
 
+.outside {
+  overflow-y: scroll;
+  height: 100%;
+}
+
 .node {
   margin-left: 12px;
   margin-top: 5px;
