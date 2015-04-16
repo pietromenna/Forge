@@ -6,7 +6,7 @@ var TreeContainer = React.createClass({
   render: function () {
     return (
       <div className="outside">
-        <ParentNode el={ this.props.html }/>
+        <ParentNode el={ this.props.html } path={ 'html' }/>
       </div>
     );
   }

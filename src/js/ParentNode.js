@@ -18,6 +18,10 @@ var ParentNode = React.createClass({
     });
   },
 
+  _highlightElementClickHandler: function () {
+    console.log(this.props.path);
+  },
+
   _createExpandChildrenElement: function() {
     var fontAwesomeIconTypes = ['fa', 'fa-lg'];
 
@@ -33,11 +37,19 @@ var ParentNode = React.createClass({
 
   _createChildNodes: function() {
     var curEl = this.props.el;
+    var curElPath = this.props.path;
 
     var childNodes = [];
 
+    var tagCounts = {};
+
     curEl.children.forEach(function(el, index) {
       if (el.type === 'tag') {
+        if (tagCounts[el.name])
+          tagCounts[el.name]++;
+        else
+          tagCounts[el.name] = 1;
+
         var nodeHasTagChildren = false;
         if (el.children && el.children.length > 0) {
           var childTypes = _.pluck(el.children, 'type')
@@ -51,9 +63,9 @@ var ParentNode = React.createClass({
         }
 
         if (nodeHasTagChildren)
-          childNodes.push(<ParentNode el={ el } key={ index }/>);
+          childNodes.push(<ParentNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } key={ index }/>);
         else
-          childNodes.push(<LeafNode el={ el } key={ index }/>);
+          childNodes.push(<LeafNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } key={ index }/>);
       }
     });
 
@@ -82,7 +94,7 @@ var ParentNode = React.createClass({
       node = (
         <div className="node parent">
           { this._createExpandChildrenElement() }
-          <span className="tag">{ startTag }</span>
+          <span className="tag" onClick={ this._highlightElementClickHandler() }>{ startTag }</span>
           { this._createChildNodes() }
           <span className="tag">{ closeTag }</span>
         </div>
