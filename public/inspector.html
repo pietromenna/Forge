@@ -34,26 +34,18 @@
     </style>
   </head>
   <body>
+    <iframe src="http://localhost:3000/test.html" id="current-page"></iframe>
+    <div id="overlay">
+      <div id="overlay-inside">
+        <div id="highlight"></div>
+      </div>
+    </div>
     <script type="text/javascript">
-      var page = document.createElement('iframe');
-      page.src = "http://localhost:3000/test.html";
-      page.id = "page";
-
-      document.body.appendChild(page);
-
-      var overlay = document.createElement('div');
-      overlay.id = 'overlay';
-      var overlayInside = document.createElement('div');
-      overlayInside.id = 'overlay-inside';
-      var highlight = document.createElement('div');
-      highlight.id = 'highlight';
-      overlayInside.appendChild(highlight);
-      overlay.appendChild(overlayInside);
-      document.body.appendChild(overlay);
+      var overlay = document.getElementById('overlay');
+      var page = document.getElementById('current-page');
 
       window.addEventListener('message', function (e) {
         var rectCoords = e.data;
-        console.log(rectCoords);
 
         highlight.style.top = rectCoords.top + 'px';
         highlight.style.bottom = rectCoords.bottom + 'px';
