@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "main": "src/js/main.js",
   "scripts": {
-    "build": "browserify src/js/main.js -o build/bundle.js",
-    "watch": "watchify src/js/main.js -o build/bundle.js --debug --verbose"
+    "compile-js": "browserify src/js/main.js -o build/bundle.js",
+    "watch-js": "watchify src/js/main.js -o build/bundle.js --debug --verbose",
+    "watch-sass": "sass --watch src/scss:build",
+    "start-server": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
