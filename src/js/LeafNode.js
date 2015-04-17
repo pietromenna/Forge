@@ -2,6 +2,17 @@ var React = require('react');
 var _ = require('lodash');
 
 var LeafNode = React.createClass({
+  _highlightElementClickHandler: function () {
+    var curPath = this.props.path;
+
+    var page = document.getElementById('current-page');
+
+    page.contentWindow.postMessage({
+      type: 'select-from-tree',
+      xpath: curPath
+    }, 'http://localhost:3000');
+  },
+
   render: function() {
     var curEl = this.props.el;
     var node;
@@ -21,7 +32,7 @@ var LeafNode = React.createClass({
     var closeTag = '</' + curEl.name + '>';
 
     return (
-      <div className="node child">
+      <div className="node child" onClick={ this._highlightElementClickHandler }>
         <span className="tag">{ startTag }</span>
         <span>{ middle }</span>
         <span className="tag">{ closeTag }</span>

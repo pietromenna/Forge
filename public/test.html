@@ -7,6 +7,36 @@
 		<script type="text/javascript" src="jquery.min.js"></script>
 		<script type="text/javascript" src="jquery.xpath.min.js"></script>
 		<script type="text/javascript">
+			var getXpathForEl = function(el) {
+				var path = '';
+				var curEl = el;
+				while (curEl != document.children[0]) {
+				    var curTag = curEl.nodeName.toLowerCase();
+				    var curTagCount = 0;
+
+				    var siblings = curEl.parentNode.children;
+
+				    for (var i = 0; i < siblings.length; i++) {
+				        var el = siblings[i];
+				        if (el.nodeName.toLowerCase() === curTag && el !== curEl) {
+				            curTagCount++;
+				        }
+
+				        if (el === curEl) {
+				            curTagCount++;
+				            break;
+				        }
+				    }
+
+				    path = '/' + curEl.nodeName.toLowerCase() + '[' + curTagCount + ']' + path;
+				    curEl = curEl.parentNode
+				}
+
+				path = 'html' + path;
+
+				return path;
+			};
+
 			var m = parent;
 			window.addEventListener("message", function (e) {
 				if (e.data.type === 'scroll') {
@@ -25,34 +55,20 @@
 					// TODO: find the source of why this can be null
 					if (el !== null) {
 						var rect = el.getBoundingClientRect();
+						var xpath = getXpathForEl(el);
+
 						m.postMessage({
 							bottom: rect.bottom,
 							height: rect.height,
 							left: rect.left,
 							right: rect.right,
 							top: rect.top,
-							width: rect.width
+							width: rect.width,
+							path: xpath
 						}, 'http://localhost:3000');
 					}
 				}
 			}, false);
-
-			$(function() {
-				var els = $(document).xpath("html/body[1]/div[5]/div[4]/div[1]/div[3]/div[2]/div[2]/a[1]/img[1]");
-				var el = els[0];
-
-				if (el !== null) {
-					var rect = el.getBoundingClientRect();
-					m.postMessage({
-						bottom: rect.bottom,
-						height: rect.height,
-						left: rect.left,
-						right: rect.right,
-						top: rect.top,
-						width: rect.width
-					}, 'http://localhost:3000');
-				}
-			});
 		</script>
 
 		<meta content="Try our Toddler Snow Flurry™ Boots at Lands' End. Everything we sell is Guaranteed. Period.® Since 1963." name="description">

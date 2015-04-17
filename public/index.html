@@ -66,6 +66,8 @@
       window.addEventListener('message', function (e) {
         var rectCoords = e.data;
 
+        console.log(e);
+
         highlight.style.top = rectCoords.top + 'px';
         highlight.style.bottom = rectCoords.bottom + 'px';
         highlight.style.left = rectCoords.left + 'px';
@@ -86,8 +88,8 @@
       overlay.addEventListener('click', function (e) {
         page.contentWindow.postMessage({
           type: 'select-coordinates',
-          x: e.offsetX,
-          y: e.offsetY
+          x: e.clientX,
+          y: e.clientY
         }, 'http://localhost:3000');
       });
     </script>
