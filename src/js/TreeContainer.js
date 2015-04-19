@@ -5,7 +5,7 @@ var LeafNode = require('./LeafNode');
 var TreeContainer = React.createClass({
   render: function () {
     return (
-      <div className="outside">
+      <div id="tree-container">
         <ParentNode el={ this.props.html } path={ 'html' }/>
       </div>
     );

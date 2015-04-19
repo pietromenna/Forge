@@ -1,7 +1,6 @@
 <html>
   <head>
     <title>HTML Inspect</title>
-    <script src="http://fb.me/react-0.13.1.js"></script>
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="main.css">
     <style>
@@ -39,7 +38,7 @@
         height: 75%;
       }
 
-      #main-container {
+      #tree-container {
         height: 25%;
         background: #80b9c2;
         padding: 10px;
@@ -48,50 +47,8 @@
     </style>
   </head>
   <body>
-    <div id="page-container">
-      <iframe src="http://localhost:3000/test.html" id="current-page"></iframe>
-      <div id="overlay">
-        <div id="overlay-inside">
-          <div id="highlight"></div>
-        </div>
-      </div>
-    </div>
     <div id="main-container"></div>
 
     <script src="bundle.js"></script>
-    <script type="text/javascript">
-      var overlay = document.getElementById('overlay');
-      var page = document.getElementById('current-page');
-
-      window.addEventListener('message', function (e) {
-        var rectCoords = e.data;
-
-        console.log(e);
-
-        highlight.style.top = rectCoords.top + 'px';
-        highlight.style.bottom = rectCoords.bottom + 'px';
-        highlight.style.left = rectCoords.left + 'px';
-        highlight.style.right = rectCoords.right + 'px';
-        highlight.style.height = rectCoords.height + 'px';
-        highlight.style.width = rectCoords.width + 'px';
-        highlight.style.display = 'block';
-      }, false);
-
-      overlay.addEventListener('mousewheel', function (e) {
-        highlight.style.display = 'none';
-        page.contentWindow.postMessage({
-          type: 'scroll',
-          delta: e.wheelDeltaY
-        }, 'http://localhost:3000');
-      });
-
-      overlay.addEventListener('click', function (e) {
-        page.contentWindow.postMessage({
-          type: 'select-coordinates',
-          x: e.clientX,
-          y: e.clientY
-        }, 'http://localhost:3000');
-      });
-    </script>
   </body>
 </html>
