@@ -19,11 +19,7 @@ var PageContainer = React.createClass({
         right: 0
       },
       displaySelection: false,
-      currentPageScrollPosition: {
-        x: 0,
-        y: 0
-      },
-      maxPageScroll: {
+      currentPageScrollDelta: {
         x: 0,
         y: 0
       }
@@ -43,43 +39,14 @@ var PageContainer = React.createClass({
     });
   },
 
-  _updateWindowDimensions: function (maxX, maxY) {
-    this.setState({
-      maxPageScroll: {
-        x: maxX,
-        y: maxY
-      }
-    });
-  },
-
   _scrollPage: function (deltaX, deltaY) {
       this.setState(function (previousState) {
-        var newXPosition = previousState.currentPageScrollPosition.x - deltaX;
-        var newYPosition = previousState.currentPageScrollPosition.y - deltaY;
-
-        // Do not allow over or under scrolling
-        if (newXPosition < 0) {
-          newXPosition = 0;
-        }
-
-        if (newXPosition > this.state.maxPageScroll.x) {
-          newXPosition = this.state.maxPageScroll.x;
-        }
-
-        if (newYPosition < 0) {
-          newYPosition = 0;
-        }
-
-        if (newYPosition > this.state.maxPageScroll.y) {
-          newYPosition = this.state.maxPageScroll.y;
-        }
-
         return {
-          currentPageScrollPosition: {
+          currentPageScrollDelta: {
             x: deltaX,
             y: deltaY
           }
-        }
+        };
     });
   },
 
@@ -97,10 +64,9 @@ var PageContainer = React.createClass({
       <div id={ 'page-container' }>
         <Page
           url={ this.props.url }
-          scrollPosition={ this.state.currentPageScrollPosition }
+          scrollDeltas={ this.state.currentPageScrollDelta }
           mouseSelectionPosition={ this.state.mouseSelectionPosition }
           updatePageSelection={ this._updatePageSelection }
-          updateWindowDimensions={ this._updateWindowDimensions }
         />
         <PageSelector
           selectionDimensions={ this.state.selectionDimensions }
