@@ -10,6 +10,22 @@ var ParentNode = React.createClass({
     };
   },
 
+  componentWillMount: function (nextProps) {
+    if (this.props.selectedNodePath && this.props.selectedNodePath.indexOf(this.props.path) !== -1) {
+      this.setState({
+        showChildren: true
+      });
+    }
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.selectedNodePath && nextProps.selectedNodePath.indexOf(nextProps.path) !== -1) {
+      this.setState({
+        showChildren: true
+      });
+    }
+  },
+
   _showChildrenClickHandler: function () {
     this.props.selectNode();
     this.setState(function (previousState) {
@@ -63,11 +79,29 @@ var ParentNode = React.createClass({
           }
         }
 
+        var path = curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']';
+
         if (nodeHasTagChildren) {
-          childNodes.push(<ParentNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } selectNode={ this.props.selectNode } key={ index }/>);
+          childNodes.push(
+            <ParentNode
+              el={ el }
+              path={ path }
+              selectNode={ this.props.selectNode }
+              selectedNodePath={ this.props.selectedNodePath }
+              key={ index }
+            />
+          );
         }
         else {
-          childNodes.push(<LeafNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } selectNode={ this.props.selectNode } key={ index }/>);
+          childNodes.push(
+            <LeafNode
+              el={ el }
+              path={ path }
+              selectNode={ this.props.selectNode }
+              selectedNodePath={ this.props.selectedNodePath }
+              key={ index }
+            />
+          );
         }
       }
     }.bind(this));
@@ -95,7 +129,7 @@ var ParentNode = React.createClass({
 
     if (this.state.showChildren) {
       node = (
-        <div className="node parent">
+        <div className="node parent" id={ this.props.path }>
           { this._createExpandChildrenElement() }
           <span className="tag" onClick={ this._highlightElementClickHandler }>{ startTag }</span>
           { this._createChildNodes() }
@@ -105,7 +139,7 @@ var ParentNode = React.createClass({
     }
     else {
       node = (
-        <div className="node parent">
+        <div className="node parent" id={ this.props.path }>
           { this._createExpandChildrenElement() }
           <span className="tag" onClick={ this._highlightElementClickHandler }>{ startTag }</span>
           <span>{ middle }</span>

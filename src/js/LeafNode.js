@@ -25,7 +25,7 @@ var LeafNode = React.createClass({
     var closeTag = '</' + curEl.name + '>';
 
     return (
-      <div className="node child" onClick={ this._highlightElementClickHandler }>
+      <div className="node child" onClick={ this._highlightElementClickHandler } id={ this.props.path }>
         <span className="tag">{ startTag }</span>
         <span>{ middle }</span>
         <span className="tag">{ closeTag }</span>
