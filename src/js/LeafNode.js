@@ -3,14 +3,7 @@ var _ = require('lodash');
 
 var LeafNode = React.createClass({
   _highlightElementClickHandler: function () {
-    var curPath = this.props.path;
-
-    var page = document.getElementById('current-page');
-
-    page.contentWindow.postMessage({
-      type: 'select-from-tree',
-      xpath: curPath
-    }, 'http://localhost:3000');
+    this.props.selectNode(this.props.path);
   },
 
   render: function() {

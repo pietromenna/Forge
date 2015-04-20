@@ -52,11 +52,15 @@ var PageContainer = React.createClass({
 
   _makeSelection: function (x, y) {
     this.setState({
-      selectionMousePosition: {
+      mouseSelectionPosition: {
         x: x,
         y: y
       }
     });
+  },
+
+  _selectNode: function(path) {
+    this.props.selectNode(path);
   },
 
   render: function () {
@@ -65,8 +69,11 @@ var PageContainer = React.createClass({
         <Page
           url={ this.props.url }
           scrollDeltas={ this.state.currentPageScrollDelta }
+          selectedNodePath={ this.props.selectedNode }
+          hideSelection={ this._hideSelection }
           mouseSelectionPosition={ this.state.mouseSelectionPosition }
           updatePageSelection={ this._updatePageSelection }
+          selectNode={ this._selectNode }
         />
         <PageSelector
           selectionDimensions={ this.state.selectionDimensions }

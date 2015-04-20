@@ -10,7 +10,8 @@ var MainContainer = React.createClass({
   getInitialState: function() {
     return {
       htmlTree: {},
-      url: 'http://localhost:3000/test.html'
+      url: 'http://localhost:3000/test.html',
+      selectedNodePath: null
     };
   },
 
@@ -36,11 +37,25 @@ var MainContainer = React.createClass({
       }.bind(this));
   },
 
+  _selectNode: function (path) {
+    this.setState({
+      selectedNodePath: path
+    });
+  },
+
   render: function () {
     return (
       <div>
-        <PageContainer url={ this.state.url }/>
-        <TreeContainer html={ this.state.htmlTree }/>
+        <PageContainer
+          url={ this.state.url }
+          selectedNode={ this.state.selectedNodePath }
+          selectNode={ this._selectNode }
+        />
+        <TreeContainer
+          html={ this.state.htmlTree }
+          selectedNode={ this.state.selectedNodePath }
+          selectNode={ this._selectNode }
+        />
       </div>
     );
   }

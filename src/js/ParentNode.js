@@ -11,6 +11,7 @@ var ParentNode = React.createClass({
   },
 
   _showChildrenClickHandler: function () {
+    this.props.selectNode();
     this.setState(function (previousState) {
       return {
         showChildren: !previousState.showChildren
@@ -19,14 +20,7 @@ var ParentNode = React.createClass({
   },
 
   _highlightElementClickHandler: function () {
-    var curPath = this.props.path;
-
-    var page = document.getElementById('current-page');
-
-    page.contentWindow.postMessage({
-      type: 'select-from-tree',
-      xpath: curPath
-    }, 'http://localhost:3000');
+    this.props.selectNode(this.props.path);
   },
 
   _createExpandChildrenElement: function() {
@@ -69,12 +63,14 @@ var ParentNode = React.createClass({
           }
         }
 
-        if (nodeHasTagChildren)
-          childNodes.push(<ParentNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } key={ index }/>);
-        else
-          childNodes.push(<LeafNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } key={ index }/>);
+        if (nodeHasTagChildren) {
+          childNodes.push(<ParentNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } selectNode={ this.props.selectNode } key={ index }/>);
+        }
+        else {
+          childNodes.push(<LeafNode el={ el } path={ curElPath + '/' + el.name + '[' + tagCounts[el.name] + ']' } selectNode={ this.props.selectNode } key={ index }/>);
+        }
       }
-    });
+    }.bind(this));
 
     return childNodes;
   },
@@ -101,7 +97,7 @@ var ParentNode = React.createClass({
       node = (
         <div className="node parent">
           { this._createExpandChildrenElement() }
-          <span className="tag" onClick={ this._highlightElementClickHandler() }>{ startTag }</span>
+          <span className="tag" onClick={ this._highlightElementClickHandler }>{ startTag }</span>
           { this._createChildNodes() }
           <span className="tag">{ closeTag }</span>
         </div>
@@ -111,7 +107,7 @@ var ParentNode = React.createClass({
       node = (
         <div className="node parent">
           { this._createExpandChildrenElement() }
-          <span className="tag">{ startTag }</span>
+          <span className="tag" onClick={ this._highlightElementClickHandler }>{ startTag }</span>
           <span>{ middle }</span>
           <span className="tag">{ closeTag }</span>
         </div>

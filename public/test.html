@@ -43,27 +43,33 @@
     			var left = window.pageXOffset || document.documentElement.scrollLeft;
 					window.scrollTo(left - e.data.x, top - e.data.y);
 				}
-				else {
-					var el;
+				else if (e.data.type === 'get-xpath') {
+					var el = document.elementFromPoint(e.data.x, e.data.y);
 
-					if (e.data.type === 'select-coordinates')
-						el = document.elementFromPoint(e.data.x, e.data.y);
-					else
-						el = $(document).xpath(e.data.xpath)[0];
+					if (el !== null) {
+						var xpath = getXpathForEl(el);
+
+						parent.postMessage({
+							type: 'path',
+							path: xpath
+						}, 'http://localhost:3000');
+					}
+				}
+				else {
+					var el = $(document).xpath(e.data.path)[0];
 
 					// TODO: find the source of why this can be null
 					if (el !== null) {
 						var rect = el.getBoundingClientRect();
-						var xpath = getXpathForEl(el);
 
 						parent.postMessage({
+							type: 'coordinates',
 							bottom: rect.bottom,
 							height: rect.height,
 							left: rect.left,
 							right: rect.right,
 							top: rect.top,
-							width: rect.width,
-							path: xpath
+							width: rect.width
 						}, 'http://localhost:3000');
 					}
 				}

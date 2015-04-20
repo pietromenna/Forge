@@ -12,13 +12,33 @@ var PageSelector = React.createClass({
   },
 
   render: function () {
-    return (
-      <div id="overlay" onWheel={ this._scrollPage } onClick={ this._makeSelection }>
-        <div id="overlay-inside">
-          <div id="highlight" style={ this.props.dimensions }></div>
+    if (this.props.displaySelection) {
+      var dimensions = this.props.selectionDimensions;
+      var dimensionsStyles = {
+        top: dimensions.top + 'px',
+        right: dimensions.right + 'px',
+        bottom: dimensions.bottom + 'px',
+        left: dimensions.left + 'px',
+        width: dimensions.width + 'px',
+        height: dimensions.height + 'px'
+      };
+
+      return (
+        <div id="overlay" onWheel={ this._scrollPage } onClick={ this._makeSelection }>
+          <div id="overlay-inside">
+            <div id="highlight" style={ this.props.selectionDimensions }></div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
+    else {
+      return (
+        <div id="overlay" onWheel={ this._scrollPage } onClick={ this._makeSelection }>
+          <div id="overlay-inside">
+          </div>
+        </div>
+      );
+    }
   }
 });
 

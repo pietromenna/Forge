@@ -10,19 +10,42 @@ var Page = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    this._updateScrollPosition(this.props.scrollDeltas.x, this.props.scrollDeltas.y);
-    // this._getSelectionCoordinatesFromPosition(this.props.mouseSelectionPosition.x, this.props.mouseSelectionPosition.y);
+    // TODO: change deltas so that don't accidently ignore similar scrolls in a row
+    // don't update the scroll position with the current deltas unless the deltas are new
+    if (this.props.scrollDeltas !== nextProps.scrollDeltas) {
+      this._updateScrollPosition(nextProps.scrollDeltas.x, nextProps.scrollDeltas.y);
+    }
+
+    if (this.props.mouseSelectionPosition !== nextProps.mouseSelectionPosition) {
+      this._getNodePathFromPosition(nextProps.mouseSelectionPosition.x, nextProps.mouseSelectionPosition.y);
+    }
+
+    if (this.props.selectedNodePath !== nextProps.selectedNodePath) {
+      if (nextProps.selectedNodePath === undefined) {
+        this.props.hideSelection();
+      }
+      else {
+        this._getNodeDimensionsFromPath(nextProps.selectedNodePath);
+      }
+    }
   },
 
   _newSelectionResponse: function (event) {
-    var rectCoords = event.data;
+    if (event.data.type === 'path') {
+      this.props.selectNode(event.data.path);
+    }
+    else if (event.data.type === 'coordinates') {
+      var rectCoords = event.data;
 
-    this.props.updatePageSelection({
-      top: rectCoords.top,
-      bottom: rectCoords.bottom,
-      left: rectCoords.left,
-      right: rectCoords.right
-    });
+      this.props.updatePageSelection({
+        top: rectCoords.top,
+        bottom: rectCoords.bottom,
+        left: rectCoords.left,
+        right: rectCoords.right,
+        width: rectCoords.width,
+        height: rectCoords.height
+      });
+    }
   },
 
   _updateScrollPosition: function (xPosition, yPosition) {
@@ -35,14 +58,23 @@ var Page = React.createClass({
     }, 'http://localhost:3000');
   },
 
-  _getSelectionCoordinatesFromPosition: function (xPosition, yPosition) {
+  _getNodePathFromPosition: function (xPosition, yPosition) {
     var page = this.getDOMNode();
 
     page.contentWindow.postMessage({
-      type: 'select-coordinates',
+      type: 'get-xpath',
       x: xPosition,
       y: yPosition
-    }, 'http://localhost:3000')
+    }, 'http://localhost:3000');
+  },
+
+  _getNodeDimensionsFromPath: function (path) {
+    var page = this.getDOMNode();
+
+    page.contentWindow.postMessage({
+      type: 'get-dimensions',
+      path: path
+    }, 'http://localhost:3000');
   },
 
   render: function () {
