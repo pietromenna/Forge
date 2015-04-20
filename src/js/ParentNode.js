@@ -18,11 +18,27 @@ var ParentNode = React.createClass({
     }
   },
 
+  componentDidMount: function () {
+    if (this.props.selectedNodePath && this.props.selectedNodePath === this.props.path) {
+      var url = window.location.href;
+      window.location.href = url + '#' + this.props.path;
+      history.replaceState(null,null,url);
+    }
+  },
+
   componentWillReceiveProps: function (nextProps) {
     if (nextProps.selectedNodePath && nextProps.selectedNodePath.indexOf(nextProps.path) !== -1) {
       this.setState({
         showChildren: true
       });
+    }
+  },
+
+  componentDidUpdate: function () {
+    if (this.props.selectedNodePath && this.props.selectedNodePath === this.props.path) {
+      var url = window.location.href;
+      window.location.href = url + '#' + this.props.path;
+      history.replaceState(null,null,url);
     }
   },
 
