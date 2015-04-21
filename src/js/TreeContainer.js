@@ -10,12 +10,14 @@ var TreeContainer = React.createClass({
   render: function () {
     return (
       <div id="tree-container">
-        <ParentNode
-          el={ this.props.html }
-          path={ 'html' }
-          selectNode={ this._selectNode }
-          selectedNodePath={ this.props.selectedNode }
-        />
+        <div>
+          <ParentNode
+            el={ this.props.html }
+            path={ 'html' }
+            selectNode={ this._selectNode }
+            selectedNodePath={ this.props.selectedNode }
+          />
+        </div>
       </div>
     );
   }

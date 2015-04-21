@@ -39,9 +39,18 @@
 
       #tree-container {
         height: 25%;
-        background: #80b9c2;
+        border-top: 2px solid black;
         padding: 10px;
         box-sizing: border-box;
+      }
+
+      #tree-container > div {
+        overflow-y: scroll;
+        height: 100%;
+      }
+
+      .node.selected {
+        background: rgba(79, 65, 18, .4);
       }
     </style>
   </head>

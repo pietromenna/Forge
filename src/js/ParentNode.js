@@ -3,6 +3,14 @@ var _ = require('lodash');
 
 var LeafNode = require('./LeafNode');
 
+var scrollToNode = function (path, selectedNodePath) {
+  if (selectedNodePath && selectedNodePath === path) {
+    var url = window.location.href;
+    window.location.href = url + '#' + path;
+    history.replaceState(null,null,url);
+  }
+};
+
 var ParentNode = React.createClass({
   getInitialState: function () {
     return {
@@ -19,11 +27,7 @@ var ParentNode = React.createClass({
   },
 
   componentDidMount: function () {
-    if (this.props.selectedNodePath && this.props.selectedNodePath === this.props.path) {
-      var url = window.location.href;
-      window.location.href = url + '#' + this.props.path;
-      history.replaceState(null,null,url);
-    }
+    scrollToNode(this.props.path, this.props.selectedNodePath);
   },
 
   componentWillReceiveProps: function (nextProps) {
@@ -35,11 +39,7 @@ var ParentNode = React.createClass({
   },
 
   componentDidUpdate: function () {
-    if (this.props.selectedNodePath && this.props.selectedNodePath === this.props.path) {
-      var url = window.location.href;
-      window.location.href = url + '#' + this.props.path;
-      history.replaceState(null,null,url);
-    }
+    scrollToNode(this.props.path, this.props.selectedNodePath);
   },
 
   _showChildrenClickHandler: function () {
@@ -143,9 +143,15 @@ var ParentNode = React.createClass({
     var middle = '...';
     var closeTag = '</' + curEl.name + '>';
 
+    var classes = ['node', 'parent'];
+
+    if (this.props.path === this.props.selectedNodePath) {
+      classes.push('selected');
+    }
+
     if (this.state.showChildren) {
       node = (
-        <div className="node parent" id={ this.props.path }>
+        <div className={ classes.join(' ') } id={ this.props.path }>
           { this._createExpandChildrenElement() }
           <span className="tag" onClick={ this._highlightElementClickHandler }>{ startTag }</span>
           { this._createChildNodes() }
@@ -155,7 +161,7 @@ var ParentNode = React.createClass({
     }
     else {
       node = (
-        <div className="node parent" id={ this.props.path }>
+        <div className={ classes.join(' ') } id={ this.props.path }>
           { this._createExpandChildrenElement() }
           <span className="tag" onClick={ this._highlightElementClickHandler }>{ startTag }</span>
           <span>{ middle }</span>
