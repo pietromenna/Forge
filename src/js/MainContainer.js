@@ -1,6 +1,7 @@
 var React = require('react');
 
 var PageContainer = require('./PageContainer');
+var EditorContainer = require('./EditorContainer');
 var TreeContainer = require('./TreeContainer');
 
 var request = require('superagent');
@@ -51,11 +52,16 @@ var MainContainer = React.createClass({
           selectedNode={ this.state.selectedNodePath }
           selectNode={ this._selectNode }
         />
-        <TreeContainer
-          html={ this.state.htmlTree }
-          selectedNode={ this.state.selectedNodePath }
-          selectNode={ this._selectNode }
-        />
+        <div className={ 'main-page-container' }>
+          <EditorContainer
+            selectedNodePath={ this.state.selectedNodePath }
+          />
+          <TreeContainer
+            html={ this.state.htmlTree }
+            selectedNode={ this.state.selectedNodePath }
+            selectNode={ this._selectNode }
+          />
+        </div>
       </div>
     );
   }
