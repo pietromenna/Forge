@@ -1,6 +1,10 @@
 @import 'modules/colors';
 @import 'modules/fonts';
 
+#page-container {
+  height: 70%;
+}
+
 iframe {
   width: 100%;
   border: none;
@@ -8,4 +12,24 @@ iframe {
   position: absolute;
   top: 0;
   left: 0;
+}
+
+#overlay {
+  width: 100%;
+  height: 70%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#overlay-inside {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+#highlight {
+  background: $highlight-color;
+  position: absolute;
 }

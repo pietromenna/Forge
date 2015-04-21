@@ -1,0 +1,21 @@
+@import 'modules/colors';
+@import 'modules/fonts';
+
+.editor-bar {
+  padding: 5px;
+  border-bottom: 1px solid black;
+  overflow: hidden;
+}
+
+.editor-bar .add-rule {
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  border-radius: 3px;
+  font-size: 12px;
+  float: right;
+}
+
+.editor-bar .add-rule:hover {
+  background-color: #4183c4;
+  color: #fff;
+}

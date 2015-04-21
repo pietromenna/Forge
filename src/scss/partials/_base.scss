@@ -2,8 +2,14 @@
 @import 'modules/fonts';
 
 @import './tree';
+@import './editor';
 @import './page';
 
 body {
   overflow: hidden;
+}
+
+.main-page-container {
+  height: 30%;
+  border-top: 2px solid black;
 }

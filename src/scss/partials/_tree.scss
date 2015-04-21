@@ -3,6 +3,14 @@
 
 #tree-container {
   overflow-y: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+  height: calc(100% - 33px);
+}
+
+#tree-container > div {
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .node {
@@ -16,7 +24,7 @@
 }
 
 .node .tag {
-  color: rgb(153, 69, 0);
+  color: $node-font-color;
 }
 
 .node i.fa {
@@ -24,4 +32,8 @@
   display: inline-block;
   margin-right: 5px;
   color: $show-children-color;
+}
+
+.node.selected {
+  background: $selected-node-color;
 }
