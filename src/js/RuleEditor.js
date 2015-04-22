@@ -1,8 +1,15 @@
 var React = require('react');
+var _ = require('lodash');
 
 var RuleEditor = React.createClass({
   render: function () {
-    console.log(this.props.selectedNodeEl);
+    var attrs = _.pairs(this.props.selectedNodeEl.attribs).map(function(attr, index) {
+      return (
+        <div className="field" key={ index }>
+          <input type="checkbox">{ attr[0] } <span className="details">({ attr[1] })</span></input>
+        </div>
+      );
+    });
     return (
       <div className="editor-container">
         <div className="details">
@@ -17,15 +24,7 @@ var RuleEditor = React.createClass({
         <div className="data">
           <div className="header">Data</div>
           <div className="content">
-            <div className="field">
-              <input type="checkbox">href <span className="details">(#site-search-input)</span></input>
-            </div>
-            <div className="field">
-              <input type="checkbox">class</input>
-            </div>
-            <div className="field">
-            <input type="checkbox">title <span className="details">(skip to search)</span></input>
-            </div>
+            { attrs }
           </div>
         </div>
       </div>

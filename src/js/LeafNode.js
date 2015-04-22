@@ -21,7 +21,7 @@ var LeafNode = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    if (nextProps.selectedNodePath && nextProps.selectedNodePath !== this.props.selectedNodePath && nextProps.selectedNodePath && nextProps.selectedNodePath === nextProps.path) {
+    if (nextProps.selectedNodePath && nextProps.selectedNodePath !== this.props.selectedNodePath && nextProps.selectedNodePath === nextProps.path) {
       nextProps.setSelectedNodeEl(nextProps.el);
     }
   },
