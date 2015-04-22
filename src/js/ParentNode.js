@@ -18,11 +18,15 @@ var ParentNode = React.createClass({
     };
   },
 
-  componentWillMount: function (nextProps) {
+  componentWillMount: function () {
     if (this.props.selectedNodePath && this.props.selectedNodePath.indexOf(this.props.path) !== -1) {
       this.setState({
         showChildren: true
       });
+
+      if (this.props.selectedNodePath === this.props.path) {
+        this.props.setSelectedNodeEl(this.props.el);
+      }
     }
   },
 
@@ -31,10 +35,14 @@ var ParentNode = React.createClass({
   },
 
   componentWillReceiveProps: function (nextProps) {
-    if (nextProps.selectedNodePath && nextProps.selectedNodePath.indexOf(nextProps.path) !== -1) {
+    if (nextProps.selectedNodePath && nextProps.selectedNodePath !== this.props.selectedNodePath && nextProps.selectedNodePath.indexOf(nextProps.path) !== -1) {
       this.setState({
         showChildren: true
       });
+
+      if (nextProps.selectedNodePath === nextProps.path) {
+        nextProps.setSelectedNodeEl(nextProps.el);
+      }
     }
   },
 
@@ -43,7 +51,7 @@ var ParentNode = React.createClass({
   },
 
   _showChildrenClickHandler: function () {
-    this.props.selectNode();
+    this.props.selectNode(this.props.path);
     this.setState(function (previousState) {
       return {
         showChildren: !previousState.showChildren
@@ -104,6 +112,7 @@ var ParentNode = React.createClass({
               path={ path }
               selectNode={ this.props.selectNode }
               selectedNodePath={ this.props.selectedNodePath }
+              setSelectedNodeEl={ this.props.setSelectedNodeEl }
               key={ index }
             />
           );
@@ -115,6 +124,7 @@ var ParentNode = React.createClass({
               path={ path }
               selectNode={ this.props.selectNode }
               selectedNodePath={ this.props.selectedNodePath }
+              setSelectedNodeEl={ this.props.setSelectedNodeEl }
               key={ index }
             />
           );

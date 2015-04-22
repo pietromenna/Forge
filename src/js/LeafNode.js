@@ -10,8 +10,20 @@ var scrollToNode = function (path, selectedNodePath) {
 };
 
 var LeafNode = React.createClass({
+  componentWillMount: function () {
+    if (this.props.selectedNodePath && this.props.selectedNodePath === this.props.path) {
+      this.props.setSelectedNodeEl(this.props.el);
+    }
+  },
+
   componentDidMount: function () {
     scrollToNode(this.props.path, this.props.selectedNodePath);
+  },
+
+  componentWillReceiveProps: function (nextProps) {
+    if (nextProps.selectedNodePath && nextProps.selectedNodePath !== this.props.selectedNodePath && nextProps.selectedNodePath && nextProps.selectedNodePath === nextProps.path) {
+      nextProps.setSelectedNodeEl(nextProps.el);
+    }
   },
 
   componentDidUpdate: function () {

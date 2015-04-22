@@ -7,6 +7,10 @@ var TreeContainer = React.createClass({
     this.props.selectNode(path);
   },
 
+  _setSelectedNodeEl: function (el) {
+    this.props.setSelectedNodeEl(el);
+  },
+
   render: function () {
     return (
       <div id="tree-container">
@@ -16,6 +20,7 @@ var TreeContainer = React.createClass({
             path={ 'html' }
             selectNode={ this._selectNode }
             selectedNodePath={ this.props.selectedNode }
+            setSelectedNodeEl={ this._setSelectedNodeEl }
           />
         </div>
       </div>

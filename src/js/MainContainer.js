@@ -12,7 +12,10 @@ var MainContainer = React.createClass({
     return {
       htmlTree: {},
       url: 'http://localhost:3000/test.html',
-      selectedNodePath: null
+      selectedNodePath: null,
+      selectedNodeEl: null,
+      rules: [],
+      draft: null
     };
   },
 
@@ -39,8 +42,24 @@ var MainContainer = React.createClass({
   },
 
   _selectNode: function (path) {
+    if (this.state.draft === null) {
+      this.setState({
+        selectedNodePath: path
+      });
+    }
+  },
+
+  _setSelectedNodeEl: function (el) {
+    if (this.state.draft === null) {
+      this.setState({
+        selectedNodeEl: el
+      });
+    }
+  },
+
+  _createDraftRule: function () {
     this.setState({
-      selectedNodePath: path
+      draft: {}
     });
   },
 
@@ -55,11 +74,15 @@ var MainContainer = React.createClass({
         <div className={ 'main-page-container' }>
           <EditorContainer
             selectedNodePath={ this.state.selectedNodePath }
+            selectedNodeEl={ this.state.selectedNodeEl }
+            draft={ this.state.draft }
+            createDraftRule={ this._createDraftRule }
           />
           <TreeContainer
             html={ this.state.htmlTree }
             selectedNode={ this.state.selectedNodePath }
             selectNode={ this._selectNode }
+            setSelectedNodeEl={ this._setSelectedNodeEl }
           />
         </div>
       </div>

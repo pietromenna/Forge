@@ -1,12 +1,12 @@
 var React = require('react');
 
 var AddRuleButton = require('./AddRuleButton');
+var RuleEditor = require('./RuleEditor');
 
 var EditorContainer = React.createClass({
   getInitialState: function () {
     return {
-      showEditor: false,
-      configFields: []
+      showEditor: false
     };
   },
 
@@ -23,12 +23,20 @@ var EditorContainer = React.createClass({
   },
 
   render: function () {
+    var ruleEditor;
+
+    if (this.props.draft) {
+      ruleEditor = <RuleEditor selectedNodeEl={ this.props.selectedNodeEl }/>
+    }
+
     return (
       <div className={ 'editor-bar' }>
         <AddRuleButton
           showEditor={ this._showEditor }
           disabled={ this.props.selectedNodePath ? false : true }
+          createDraftRule={ this.props.createDraftRule }
         />
+        { ruleEditor }
       </div>
     );
   }

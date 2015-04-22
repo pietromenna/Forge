@@ -19,3 +19,71 @@
   background-color: #4183c4;
   color: #fff;
 }
+
+.editor-container {
+  position: absolute;
+  background: #f7f7f9;
+  border: 1px solid #3269a0;
+  width: 400px;
+  right: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 6px;
+  margin-left: 10px;
+  bottom: 30%;
+  max-height: 500px;
+
+  .header {
+    color: #3269a0;
+    padding-top: 16px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
+    border-bottom: 1px dotted;
+    text-transform: uppercase;
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 10px;
+  }
+
+  .field:not(:last-child) {
+    margin-bottom: 12px;
+  }
+
+  .field .details {
+    color: rgb(113, 113, 113);
+  }
+
+  label {
+    min-width: 50px;
+    display: inline-block;
+
+    &.top {
+      vertical-align: top;
+    }
+  }
+
+  input[type="text"] {
+    width: 327px;
+    padding: 4px;
+    font-size: 14px;
+  }
+
+  input[type="radio"] {
+    margin-right: 6px;
+  }
+
+  input[type="checkbox"] {
+    margin-right: 6px;
+  }
+
+  ul {
+    display: inline-block;
+
+    li:not(:last-child) {
+      margin-bottom: 4px;
+    }
+  }
+}
