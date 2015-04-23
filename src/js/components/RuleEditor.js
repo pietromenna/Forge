@@ -1,15 +1,36 @@
 var React = require('react');
 var _ = require('lodash');
 
+var DataItem = require('./DataItem');
+
+var DraftActions = require('../actions/DraftActions');
+
 var RuleEditor = React.createClass({
+  propTypes: {
+    selectedNodeEl: React.PropTypes.object.isRequired,
+    draft: React.PropTypes.object.isRequired
+  },
+
+  _onNameChange: function (e) {
+    var newValue = this.refs.name.getDOMNode().value;
+    DraftActions.updateName(newValue);
+  },
+
   render: function () {
     var attrs = _.pairs(this.props.selectedNodeEl.attribs).map(function(attr, index) {
+      var attribute = attr[0];
+      var value = attr[1];
+
       return (
-        <div className="field" key={ index }>
-          <input type="checkbox">{ attr[0] } <span className="details">({ attr[1] })</span></input>
-        </div>
+        <DataItem
+          attribute={ attribute }
+          value={ value }
+          selected={ this.props.draft.data[attribute] ? true : false }
+          key={ index }
+        />
       );
-    });
+    }.bind(this));
+
     return (
       <div className="editor-container">
         <div className="details">
@@ -17,7 +38,7 @@ var RuleEditor = React.createClass({
           <div className="content">
             <div className="field">
               <label>Name</label>
-              <input type="text"/>
+              <input type="text" onChange={ this._onNameChange } ref={ 'name' } value={ this.props.draft.name }/>
             </div>
           </div>
         </div>

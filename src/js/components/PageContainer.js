@@ -26,6 +26,15 @@ var PageContainer = React.createClass({
     };
   },
 
+  shouldComponentUpdate: function (nextProps, nextState) {
+    if (_.isEqual(this.props, nextProps) && _.isEqual(this.state, nextState)) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
+
   _hideSelection: function () {
     this.setState({
       displaySelection: false

@@ -1,25 +1,39 @@
 var React = require('react');
 
+var request = require('superagent');
+var htmlparser = require('htmlparser2');
+var _ = require('lodash');
+
 var PageContainer = require('./PageContainer');
 var EditorContainer = require('./EditorContainer');
 var TreeContainer = require('./TreeContainer');
 
-var request = require('superagent');
-var htmlparser = require('htmlparser2');
+var DraftStore = require('../stores/DraftStore');
+
+var getDraftState = function() {
+  var state = DraftStore.getDraft();
+
+  if (_.isEmpty(state)) {
+    return null;
+  }
+  else {
+    return state;
+  }
+};
 
 var MainContainer = React.createClass({
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       htmlTree: {},
       url: 'http://localhost:3000/test.html',
       selectedNodePath: null,
       selectedNodeEl: null,
       rules: [],
-      draft: null
+      draft: getDraftState()
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     request
       .get('http://localhost:3000/testhtml')
       .end(function(err, res) {
@@ -39,6 +53,18 @@ var MainContainer = React.createClass({
         parser.write(res.text);
         parser.done();
       }.bind(this));
+
+    DraftStore.addChangeListener(this._onChange);
+  },
+
+  componentWillMount: function () {
+    DraftStore.removeChangeListener(this._onChange);
+  },
+
+  _onChange: function() {
+    this.setState({
+      draft: getDraftState()
+    });
   },
 
   _selectNode: function (path) {
@@ -57,12 +83,6 @@ var MainContainer = React.createClass({
     }
   },
 
-  _createDraftRule: function () {
-    this.setState({
-      draft: {}
-    });
-  },
-
   render: function () {
     return (
       <div>
@@ -76,7 +96,6 @@ var MainContainer = React.createClass({
             selectedNodePath={ this.state.selectedNodePath }
             selectedNodeEl={ this.state.selectedNodeEl }
             draft={ this.state.draft }
-            createDraftRule={ this._createDraftRule }
           />
           <TreeContainer
             html={ this.state.htmlTree }

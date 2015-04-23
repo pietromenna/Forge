@@ -3,18 +3,22 @@
   "version": "1.0.0",
   "main": "src/js/main.js",
   "scripts": {
-    "compile-js": "browserify src/js/main.js -o build/bundle.js",
-    "watch-js": "watchify src/js/main.js -o build/bundle.js --debug --verbose",
+    "compile-js": "browserify src/js/app.js -o build/bundle.js",
+    "watch-js": "watchify src/js/app.js -o build/bundle.js --debug --verbose",
     "watch-sass": "sass --watch src/scss:build",
     "start-server": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "events": "^1.0.2",
+    "flux": "^2.0.1",
     "htmlparser2": "^3.8.2",
     "jquery": "^2.1.3",
     "jquery-xpath": "^0.2.5",
+    "keymirror": "^0.1.1",
     "lodash": "^3.6.0",
+    "object-assign": "^2.0.0",
     "react": "^0.13.0",
     "superagent": "^1.1.0"
   },

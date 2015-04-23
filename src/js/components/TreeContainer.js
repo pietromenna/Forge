@@ -1,8 +1,19 @@
+var _ = require('lodash');
+
 var React = require('react');
 var ParentNode = require('./ParentNode');
 var LeafNode = require('./LeafNode');
 
 var TreeContainer = React.createClass({
+  shouldComponentUpdate: function (nextProps, nextState) {
+    if (_.isEqual(this.props, nextProps)) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  },
+
   _selectNode: function (path) {
     this.props.selectNode(path);
   },
