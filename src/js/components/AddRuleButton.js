@@ -18,7 +18,7 @@ var AddRuleButton = React.createClass({
         type="button"
         disabled={ (this.props.selectedNodePath && !this.props.draft) ? false : true }
         onClick={ this._createDraftRule }
-        className={ 'add-rule' }
+        className={ 'right add-rule' }
       >Add Rule</button>
     );
   }

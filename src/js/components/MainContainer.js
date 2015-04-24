@@ -109,6 +109,7 @@ var MainContainer = React.createClass({
             selectedNodePath={ this.state.selectedNodePath }
             selectedNodeEl={ this.state.selectedNodeEl }
             draft={ this.state.draft }
+            rules={ this.state.rules }
           />
           <TreeContainer
             html={ this.state.htmlTree }
