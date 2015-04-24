@@ -27,7 +27,17 @@ var RuleEditor = React.createClass({
   },
 
   render: function () {
-    var attrs = _.pairs(this.props.selectedNodeEl.attribs).map(function(attr, index) {
+    var text = '';
+    this.props.selectedNodeEl.children.forEach(function (child) {
+      if (child.type === 'text') {
+        text += child.data;
+      }
+    });
+
+    var attributesAsKeyValuePairs = _.pairs(this.props.selectedNodeEl.attribs);
+    attributesAsKeyValuePairs.push(['text', text]);
+
+    var attrs = attributesAsKeyValuePairs.map(function(attr, index) {
       var attribute = attr[0];
       var value = attr[1];
 
