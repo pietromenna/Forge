@@ -9,6 +9,7 @@ var EditorContainer = require('./EditorContainer');
 var TreeContainer = require('./TreeContainer');
 
 var DraftStore = require('../stores/DraftStore');
+var RuleStore = require('../stores/RuleStore');
 
 var getDraftState = function() {
   var state = DraftStore.getDraft();
@@ -21,6 +22,10 @@ var getDraftState = function() {
   }
 };
 
+var getRuleState = function() {
+  return RuleStore.getAllRules();
+}
+
 var MainContainer = React.createClass({
   getInitialState: function () {
     return {
@@ -28,7 +33,7 @@ var MainContainer = React.createClass({
       url: 'http://localhost:3000/test.html',
       selectedNodePath: null,
       selectedNodeEl: null,
-      rules: [],
+      rules: getRuleState(),
       draft: getDraftState()
     };
   },
@@ -54,16 +59,24 @@ var MainContainer = React.createClass({
         parser.done();
       }.bind(this));
 
-    DraftStore.addChangeListener(this._onChange);
+    DraftStore.addChangeListener(this._onDraftChange);
+    RuleStore.addChangeListener(this._onRuleChange);
   },
 
-  componentWillMount: function () {
-    DraftStore.removeChangeListener(this._onChange);
+  componentWillUnMount: function () {
+    DraftStore.removeChangeListener(this._onDraftChange);
+    RuleStore.removeChangeListener(this._onRuleChange);
   },
 
-  _onChange: function() {
+  _onDraftChange: function() {
     this.setState({
       draft: getDraftState()
+    });
+  },
+
+  _onRuleChange: function() {
+    this.setState({
+      rules: getRuleState()
     });
   },
 

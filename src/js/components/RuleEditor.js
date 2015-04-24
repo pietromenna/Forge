@@ -4,6 +4,7 @@ var _ = require('lodash');
 var DataItem = require('./DataItem');
 
 var DraftActions = require('../actions/DraftActions');
+var RuleActions = require('../actions/RuleActions');
 
 var RuleEditor = React.createClass({
   propTypes: {
@@ -21,7 +22,8 @@ var RuleEditor = React.createClass({
   },
 
   _createNewRule: function () {
-
+    RuleActions.create(this.props.draft);
+    DraftActions.destroy();
   },
 
   render: function () {

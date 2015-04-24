@@ -14,7 +14,12 @@ var EditorContainer = React.createClass({
     var ruleEditor;
 
     if (this.props.draft) {
-      ruleEditor = <RuleEditor selectedNodeEl={ this.props.selectedNodeEl } draft={ this.props.draft }/>
+      ruleEditor = (
+        <RuleEditor
+          selectedNodeEl={ this.props.selectedNodeEl }
+          draft={ this.props.draft }
+        />
+      );
     }
 
     return (
