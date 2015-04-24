@@ -26,6 +26,7 @@ var EditorContainer = React.createClass({
       <div className={ 'editor-bar' }>
         <AddRuleButton
           selectedNodePath={ this.props.selectedNodePath }
+          draft={ this.props.draft }
         />
         { ruleEditor }
       </div>

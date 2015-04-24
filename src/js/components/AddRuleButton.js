@@ -4,7 +4,8 @@ var DraftActions = require('../actions/DraftActions');
 
 var AddRuleButton = React.createClass({
   propTypes: {
-    selectedNodePath: React.PropTypes.string
+    selectedNodePath: React.PropTypes.string,
+    draft: React.PropTypes.object
   },
 
   _createDraftRule: function () {
@@ -15,12 +16,10 @@ var AddRuleButton = React.createClass({
     return (
       <button
         type="button"
-        disabled={ this.props.selectedNodePath ? false : true }
+        disabled={ (this.props.selectedNodePath && !this.props.draft) ? false : true }
         onClick={ this._createDraftRule }
         className={ 'add-rule' }
-      >
-      Add Rule
-      </button>
+      >Add Rule</button>
     );
   }
 });
