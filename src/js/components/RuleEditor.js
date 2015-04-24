@@ -16,6 +16,14 @@ var RuleEditor = React.createClass({
     DraftActions.updateName(newValue);
   },
 
+  _cancelRuleCreation: function () {
+    DraftActions.destroy();
+  },
+
+  _createNewRule: function () {
+
+  },
+
   render: function () {
     var attrs = _.pairs(this.props.selectedNodeEl.attribs).map(function(attr, index) {
       var attribute = attr[0];
@@ -47,6 +55,10 @@ var RuleEditor = React.createClass({
           <div className="content">
             { attrs }
           </div>
+        </div>
+        <div className="actions">
+          <button type="button" className={ 'left' } onClick={ this._cancelRuleCreation }>Cancel</button>
+          <button type="button" className={ 'right' } onClick={ this._createNewRule }>Create</button>
         </div>
       </div>
     );

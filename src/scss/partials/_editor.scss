@@ -16,6 +16,18 @@
   background: #fff;
   border-radius: 3px;
   font-size: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 10px;
+  padding-left: 10px;
+
+  &.left {
+    float: left;
+  }
+
+  &.right {
+    float: right;
+  }
 }
 
 .editor-bar .add-rule:hover {
@@ -35,6 +47,13 @@
   margin-left: 10px;
   bottom: 30%;
   max-height: 500px;
+
+  .actions {
+    padding: 10px;
+    overflow: hidden;
+    border-top: 1px dotted #3269a0;
+    margin-top: 15px;
+  }
 
   .header {
     color: #3269a0;
