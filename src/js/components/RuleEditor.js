@@ -9,7 +9,8 @@ var RuleActions = require('../actions/RuleActions');
 var RuleEditor = React.createClass({
   propTypes: {
     selectedNodeEl: React.PropTypes.object.isRequired,
-    draft: React.PropTypes.object.isRequired
+    draft: React.PropTypes.object.isRequired,
+    rules: React.PropTypes.array.isRequired
   },
 
   _onNameChange: function (e) {
@@ -51,6 +52,30 @@ var RuleEditor = React.createClass({
       );
     }.bind(this));
 
+    var subRules = [];
+
+    this.props.rules.forEach(function (rule) {
+      if (rule.target.indexOf(this.props.draft.target) === 0) {
+        subRules.push(rule);
+      }
+    }.bind(this));
+
+    var subRuleList;
+
+    if (subRules.length > 0) {
+      subRules = subRules.map(function (rule, index) {
+        return (
+          <option key={ index }>{ rule.name }</option>
+        );
+      });
+
+      subRuleList = (
+        <select>
+          { subRules }
+        </select>
+      );
+    }
+
     return (
       <div className="editor-container dialog-container">
         <div className="details">
@@ -67,6 +92,10 @@ var RuleEditor = React.createClass({
           <div className="content">
             { attrs }
           </div>
+        </div>
+        <div className="sub-rules">
+          <div className="header">Sub Rules</div>
+          { subRuleList }
         </div>
         <div className="actions">
           <button type="button" className={ 'left' } onClick={ this._cancelRuleCreation }>Cancel</button>

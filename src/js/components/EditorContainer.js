@@ -35,6 +35,7 @@ var EditorContainer = React.createClass({
         <RuleEditor
           selectedNodeEl={ this.props.selectedNodeEl }
           draft={ this.props.draft }
+          rules={ this.props.rules }
         />
       );
     }

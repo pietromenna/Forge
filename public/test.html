@@ -41,8 +41,6 @@
 				if (e.data.type === 'scroll') {
 					var top  = window.pageYOffset || document.documentElement.scrollTop;
     			var left = window.pageXOffset || document.documentElement.scrollLeft;
-					console.log(top);
-					console.log(left);
 					window.scrollTo(left - e.data.x, top - e.data.y);
 				}
 				else if (e.data.type === 'get-xpath') {
