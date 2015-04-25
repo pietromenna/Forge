@@ -5,6 +5,7 @@
   padding: 5px;
   border-bottom: 1px solid black;
   overflow: hidden;
+  font-size: 14px;
 }
 
 .editor-bar button {
@@ -24,25 +25,43 @@
   &.right {
     float: right;
   }
+
+  &:not([disabled]) {
+
+    &:hover, &:active {
+      background-color: #4183c4;
+      color: #fff;
+    }
+  }
 }
 
-.editor-bar .add-rule:hover {
-  background-color: #4183c4;
-  color: #fff;
-}
-
-.editor-container {
+.dialog-container {
   position: absolute;
   background: #f7f7f9;
   border: 1px solid #3269a0;
   width: 400px;
-  right: 0;
   margin-top: 10px;
   margin-bottom: 10px;
   margin-right: 6px;
   margin-left: 10px;
   bottom: 30%;
   max-height: 500px;
+  box-sizing: border-box;
+}
+
+.rules-dialog-container {
+  left: 0;
+  padding: 10px;
+
+  .rule-container {
+    border: 1px dotted #3269a0;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+}
+
+.editor-container {
+  right: 0;
 
   .actions {
     padding: 10px;

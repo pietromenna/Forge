@@ -52,7 +52,7 @@ var RuleEditor = React.createClass({
     }.bind(this));
 
     return (
-      <div className="editor-container">
+      <div className="editor-container dialog-container">
         <div className="details">
           <div className="header">Details</div>
           <div className="content">

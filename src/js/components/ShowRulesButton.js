@@ -4,11 +4,12 @@ var RuleActions = require('../actions/RuleActions');
 
 var ShowRulesButton = React.createClass({
   propTypes: {
-    rules: React.PropTypes.array.isRequired
+    rules: React.PropTypes.array.isRequired,
+    showRules: React.PropTypes.bool.isRequired
   },
 
   _showCurrentRules: function () {
-
+    this.props.toggleRules();
   },
 
   render: function () {
@@ -18,7 +19,7 @@ var ShowRulesButton = React.createClass({
         disabled={ this.props.rules.length > 0 ? false : true }
         onClick={ this._showCurrentRules }
         className={ 'left' }
-      >Show Rules</button>
+      >{ this.props.showRules ? 'Hide Rules' : 'Show Rules' }</button>
     );
   }
 });
