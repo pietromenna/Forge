@@ -77,6 +77,7 @@ var PageContainer = React.createClass({
       <div id={ 'page-container' }>
         <Page
           url={ this.props.url }
+          html={ this.props.html }
           scrollDeltas={ this.state.currentPageScrollDelta }
           selectedNodePath={ this.props.selectedNode }
           hideSelection={ this._hideSelection }

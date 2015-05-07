@@ -1,6 +1,13 @@
 var React = require('react');
 
 var Page = React.createClass({
+  _insertHTML: function (html) {
+    var iframeDocument = this.getDOMNode().contentWindow.document;
+    iframeDocument.open();
+    iframeDocument.write(html);
+    iframeDocument.close();
+  },
+
   componentDidMount: function () {
     window.addEventListener('message', this._newSelectionResponse, false);
   },
@@ -27,6 +34,12 @@ var Page = React.createClass({
       else {
         this._getNodeDimensionsFromPath(nextProps.selectedNodePath);
       }
+    }
+  },
+
+  componentWillUpdate: function (nextProps, nextState) {
+    if (this.props.html !== nextProps.html) {
+      this._insertHTML(nextProps.html);
     }
   },
 
@@ -78,7 +91,7 @@ var Page = React.createClass({
   },
 
   render: function () {
-    return <iframe src={ this.props.url } className="page-view"></iframe>
+    return <iframe className="page-view"></iframe>
   }
 });
 
