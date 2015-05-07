@@ -36,6 +36,7 @@ var ParentNode = React.createClass({
 
   componentWillReceiveProps: function (nextProps) {
     if (nextProps.selectedNodePath && nextProps.selectedNodePath !== this.props.selectedNodePath && nextProps.selectedNodePath.indexOf(nextProps.path) !== -1) {
+      debugger;
       this.setState({
         showChildren: true
       });

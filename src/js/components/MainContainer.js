@@ -129,7 +129,6 @@ var MainContainer = React.createClass({
           				return path; \
           			}; \
           			window.addEventListener('message', function (e) { \
-                  debugger; \
           				if (e.data.type === 'scroll') { \
           					var top  = window.pageYOffset || document.documentElement.scrollTop; \
               			var left = window.pageXOffset || document.documentElement.scrollLeft; \
@@ -170,18 +169,20 @@ var MainContainer = React.createClass({
                       parts.shift(); \
                       for (var m = 0; m < parts.length; m++) { \
                           var part = parts[m]; \
-                          var re = new RegExp('(.*)(\[[0-9])\]$', 'g'); \
-                          var reResults = re.exec(part); \
-                          var possibleTag = reResults[1].split('['); \
-                          var tagLookingFor = possibleTag[0]; \
-                          var tagLookingForCount = parseInt(reResults[2]); \
+                          var partSplit = part.split('['); \
+                          var tagLookingFor = partSplit[0]; \
+                          var tagLookingForCount = parseInt(partSplit[1].split(']')[0]); \
                           var curNodeChildren = curNode.children; \
                           var nodeTypeCount = {}; \
+                          var divs = []; \
                           if (curNodeChildren.length > 0) { \
                               var prevNode = curNode; \
                               for (var i = 0; i < curNodeChildren.length; i++) { \
                                  var child = curNodeChildren[i]; \
                                  var tagName = child.tagName.toLowerCase(); \
+                                 if (tagName === 'div') { \
+                                   divs.push(child); \
+                                 } \
                                  nodeTypeCount[tagName] = nodeTypeCount[tagName] ? nodeTypeCount[tagName] + 1 : 1; \
                                  if (tagName === tagLookingFor && nodeTypeCount[tagName] === tagLookingForCount) { \
                                       curNode = child; \
